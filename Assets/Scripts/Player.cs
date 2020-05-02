@@ -36,17 +36,14 @@ public class Player : MonoBehaviour
 
     void Move(int nextTileX, int nextTileY, char direction) {
         if (nextTileX > -1 && nextTileY > -1 && nextTileX < rowsLength && nextTileY < columnsLength) {
-            //if (tiles[nextTileX][nextTileY] == '.') {
             if (MoveSprite(nextTileX, nextTileY, 'P', direction)) { 
                 
             }
-            //}
-            //else 
-            if (tiles[nextTileX][nextTileY] == 'W' || tiles[nextTileX][nextTileY] == 'M') {
+            /*if (tiles[nextTileX][nextTileY] == 'W' || tiles[nextTileX][nextTileY] == 'M') {
                 if (MoveSprite(nextTileX, nextTileY, tiles[nextTileX][nextTileY], direction)) {
                     
                 }
-            }
+            }*/
             else {
                 print("This is a wall");
             }
