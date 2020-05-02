@@ -13,6 +13,8 @@ public class GridGen : MonoBehaviour
 
     [HideInInspector]
     public int rowsLength = 0;
+    [HideInInspector]
+    public int columnsLength = 0;
 
     [HideInInspector]
     public int playerX = -1;
@@ -30,7 +32,7 @@ public class GridGen : MonoBehaviour
 
     void Awake(){
         BuildLevel();
-        TestLevel();
+        //TestLevel();
     }
 
     void BuildLevel() {
@@ -40,42 +42,50 @@ public class GridGen : MonoBehaviour
 
         if (rows.Length > 0)
             rowsLength = rows[0].Length;
-        else
+        else {
             InvalidLevel("No level entered");
+            return;
+        }
 
+        //Confirms that rows are all of the same length
         for (int i = 0; i < rows.Length; i++) {
-            if (rows[i].Length == rowsLength) {
-                tiles.Add(new List<char>());
-                for (int j = 0; j < rows[i].Length; j++) {
-                    tiles[i].Add(rows[i][j]);
-                    if (tiles[i][j] == 'P')
-                        SetPlayerPos(j, i);
-                }
-            }
-            else {
+            if (rows[i].Length != rowsLength) {
                 InvalidLevel("One row is not the right length: " + (i + 1));
-                break;
+                return;
             }
         }
+            
+        for (int i = 0; i < rowsLength; i++) {
+            tiles.Add(new List<char>());
+            for (int j = rows.Length - 1; j >= 0; j--) {
+                tiles[i].Add(rows[j][i]);
+
+                if (rows[j][i] == 'P') {
+                    SetPlayerPos(i, rows.Length - 1 - j);
+                }
+            }
+        }
+
+        columnsLength = tiles[0].Count;
 
         if (playerX == -1 || playerY == -1)
             InvalidLevel("No player");
         else {
-            //PutSprites();
+            PutSprites();
             this.gameObject.AddComponent<Player>();
         }
     }
 
-    void PutSprites() {
-        TileBase[] whatever = new TileBase[tiles.Count * rowsLength];
-        Vector3Int[] vectWhatever = new Vector3Int[tiles.Count * rowsLength];
+    public void PutSprites() {
+        TileBase[] tilesGraphics = new TileBase[tiles.Count * tiles[0].Count];
+        Vector3Int[] tilesPos = new Vector3Int[tiles.Count * tiles[0].Count];
 
         int xDecal = 0;
         int yDecal = 0;
         int count = 0;
-        for (int i = 0; i < whatever.Length; i++) {
-            whatever[i] = background;
-            vectWhatever[i] = baseLevel.origin + 
+        for (int i = 0; i < tilesGraphics.Length; i++) {
+            tilesGraphics[i] = background;
+            tilesPos[i] = baseLevel.origin + 
                 Vector3Int.RoundToInt(new Vector3(baseLevel.cellSize.x * xDecal, baseLevel.cellSize.y * yDecal, baseLevel.cellSize.z));
 
             count++;
@@ -86,7 +96,7 @@ public class GridGen : MonoBehaviour
             }
         }
 
-        baseLevel.SetTiles(vectWhatever, whatever);
+        baseLevel.SetTiles(tilesPos, tilesGraphics);
 
         baseLevel.CompressBounds();
 
@@ -96,21 +106,21 @@ public class GridGen : MonoBehaviour
             localTilesPositions.Add(localPlace);
         }
 
-        for (int i = 0; i < tiles.Count * rowsLength; i++) {
-            for (int j = 0; j < tiles[i].Count; j++) {
-                char character = tiles[i][j];
-                if (tiles[i][j] == 'P') {
-                    tiles[i][j] = '.';
-                    baseLevel.SetTile(localTilesPositions[i * j + i], player);
+        for (int i = 0; i < columnsLength; i++) {
+            for (int j = 0; j < rowsLength; j++) {
+                char character = tiles[j][i];
+                print(character);
+                if (character == 'P') {
+                    baseLevel.SetTile(localTilesPositions[i * rowsLength + j], player);
                 }
-                else if (tiles[i][j] == 'W')
-                    baseLevel.SetTile(localTilesPositions[i * j + i], wall);
-                else if (tiles[i][j] == 'W')
-                    baseLevel.SetTile(localTilesPositions[i * j + i], woman);
-                else if (tiles[i][j] == 'M')
-                    baseLevel.SetTile(localTilesPositions[i * j + i], man);
-
-                //baseLevel.SetTile(localTilesPositions[i * j + i],);
+                else if (character == '#')
+                    baseLevel.SetTile(localTilesPositions[i * rowsLength + j], wall);
+                else if (character == 'W') {
+                    baseLevel.SetTile(localTilesPositions[i * rowsLength + j], woman);
+                }
+                else if (character == 'M') {
+                    baseLevel.SetTile(localTilesPositions[i * rowsLength + j], man);
+                }
             }
         }
     }
@@ -128,7 +138,7 @@ public class GridGen : MonoBehaviour
     void TestLevel() {
         for (int i = 0; i < tiles.Count; i++) {
             for (int j = 0; j < tiles[i].Count; j++) {
-                print(tiles[i][j]);
+                //print(tiles[i][j]);
             }
         }
     }
