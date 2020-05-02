@@ -62,19 +62,67 @@ public class Player : MonoBehaviour
         if (nextSymbol == '.') {
             tiles[newX][newY] = symbol;
             if (symbol == 'P') {
-                tiles[x][y] = '.';
-                tiles[newX][newY] = 'P';
-                x = newX;
-                y = newY;
-                grid.tiles = tiles;
-                grid.PutSprites();
+                MovePlayer(newX, newY);
             }
             return true;
         }
         else if (nextSymbol == '#') {
             return false;
         }
+        else if (nextSymbol == 'W') {
+            if (symbol == 'W' || symbol == 'P') {
+                Vector2 dir = NextPosition(direction);
+                int newNewX = newX + (int)dir.x;
+                int newNewY = newY + (int)dir.y;
 
-        return true;
+                if (MoveSprite(newNewX, newNewY, nextSymbol, direction)) {
+                    if (symbol == 'W') {
+                        tiles[newX][newY] = symbol;
+                        return true;
+                    }
+                    if (symbol == 'P')
+                        MovePlayer(newX, newY);
+                }
+            }
+        }
+        else if (nextSymbol == 'M') {
+            if (symbol == 'M') {
+                //TODO: change this to G
+                tiles[newX][newY] = 'A';
+                return true;
+            }
+            else if (symbol == 'P') {
+                Vector2 dir = NextPosition(direction);
+                int newNewX = newX + (int)dir.x;
+                int newNewY = newY + (int)dir.y;
+
+                if (MoveSprite(newNewX, newNewY, nextSymbol, direction))
+                    MovePlayer(newX, newY);
+            }
+        }
+
+        return false;
+    }
+
+    void MovePlayer(int newX, int newY) {
+        tiles[x][y] = '.';
+        tiles[newX][newY] = 'P';
+        x = newX;
+        y = newY;
+        grid.tiles = tiles;
+        grid.PutSprites();
+    }
+
+    Vector2 NextPosition(char direction) {
+        if (direction == 'u')
+            return new Vector2(0, 1);
+        else if (direction == 'd')
+            return new Vector2(0, -1);
+        else if (direction == 'l')
+            return new Vector2(-1, 0);
+        else if (direction == 'r')
+            return new Vector2(1, 0);
+
+        return new Vector2(0,0);
     }
 }

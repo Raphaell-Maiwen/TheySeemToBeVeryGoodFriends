@@ -109,7 +109,7 @@ public class GridGen : MonoBehaviour
         for (int i = 0; i < columnsLength; i++) {
             for (int j = 0; j < rowsLength; j++) {
                 char character = tiles[j][i];
-                print(character);
+                //print(character);
                 if (character == 'P') {
                     baseLevel.SetTile(localTilesPositions[i * rowsLength + j], player);
                 }
@@ -121,6 +121,15 @@ public class GridGen : MonoBehaviour
                 else if (character == 'M') {
                     baseLevel.SetTile(localTilesPositions[i * rowsLength + j], man);
                 }
+                //Woman in love
+                else if (character == 'L') {
+                    baseLevel.SetTile(localTilesPositions[i * rowsLength + j], womanInLove);
+                }
+                //Man en amour
+                else if (character == 'A') {
+                    baseLevel.SetTile(localTilesPositions[i * rowsLength + j], manInLove);
+                }
+                //
             }
         }
     }

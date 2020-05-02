@@ -163,12 +163,15 @@ MonoBehaviour:
 
     #...
 
-    #..#
+    #.W#
+
+    #.W#
 
     #.P#
 
     ####'
   rowsLength: 0
+  columnsLength: 0
   playerX: -1
   playerY: -1
   baseLevel: {fileID: 1428894375}
