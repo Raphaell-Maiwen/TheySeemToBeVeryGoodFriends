@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     int y = 0;
 
     GridGen grid;
-    List<List<char>> tiles;
+    //List<List<char>> tiles;
     int rowsLength = 0;
     int columnsLength = 0;
 
@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
         grid = this.gameObject.GetComponent<GridGen>();
         x = grid.playerX;
         y = grid.playerY;
-        tiles = grid.tiles;
+        //tiles = grid.tiles;
 
         rowsLength = grid.rowsLength;
         columnsLength = grid.columnsLength;
@@ -28,22 +28,20 @@ public class Player : MonoBehaviour
             Move(x, y + 1, 'u');
         else if (Input.GetKeyDown(KeyCode.DownArrow))
             Move(x, y - 1, 'd');
-        else if (Input.GetKeyDown(KeyCode.LeftArrow)) 
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
             Move(x - 1, y, 'l');
         else if (Input.GetKeyDown(KeyCode.RightArrow))
             Move(x + 1, y, 'r');
+        else if (Input.GetKeyDown(KeyCode.R))
+            grid.Reset();
     }
 
     void Move(int nextTileX, int nextTileY, char direction) {
         if (nextTileX > -1 && nextTileY > -1 && nextTileX < rowsLength && nextTileY < columnsLength) {
-            if (MoveSprite(nextTileX, nextTileY, 'P', direction)) { 
-                
+            if (MoveSprite(nextTileX, nextTileY, 'P', direction)) {
+                grid.CheckHeteroMatching();
+                grid.CheckWin();
             }
-            /*if (tiles[nextTileX][nextTileY] == 'W' || tiles[nextTileX][nextTileY] == 'M') {
-                if (MoveSprite(nextTileX, nextTileY, tiles[nextTileX][nextTileY], direction)) {
-                    
-                }
-            }*/
             else {
                 print("This is a wall");
             }
@@ -55,9 +53,9 @@ public class Player : MonoBehaviour
     }
 
     bool MoveSprite(int newX, int newY, char symbol, char direction) {
-        char nextSymbol = tiles[newX][newY];
+        char nextSymbol = grid.tiles[newX][newY];
         if (nextSymbol == '.') {
-            tiles[newX][newY] = symbol;
+            grid.tiles[newX][newY] = symbol;
             if (symbol == 'P') {
                 MovePlayer(newX, newY);
             }
@@ -74,18 +72,18 @@ public class Player : MonoBehaviour
 
                 if (MoveSprite(newNewX, newNewY, nextSymbol, direction)) {
                     if (symbol == 'W') {
-                        tiles[newX][newY] = symbol;
+                        grid.tiles[newX][newY] = symbol;
                         return true;
                     }
                     if (symbol == 'P')
-                        MovePlayer(newX, newY);
+                        return MovePlayer(newX, newY);
                 }
             }
         }
         else if (nextSymbol == 'M') {
             if (symbol == 'M') {
                 //TODO: change this to G
-                tiles[newX][newY] = 'A';
+                grid.tiles[newX][newY] = 'A';
                 return true;
             }
             else if (symbol == 'P') {
@@ -94,20 +92,22 @@ public class Player : MonoBehaviour
                 int newNewY = newY + (int)dir.y;
 
                 if (MoveSprite(newNewX, newNewY, nextSymbol, direction))
-                    MovePlayer(newX, newY);
+                     return MovePlayer(newX, newY);
             }
         }
 
         return false;
     }
 
-    void MovePlayer(int newX, int newY) {
-        tiles[x][y] = '.';
-        tiles[newX][newY] = 'P';
+    bool MovePlayer(int newX, int newY) {
+        grid.tiles[x][y] = '.';
+        grid.tiles[newX][newY] = 'P';
         x = newX;
         y = newY;
-        grid.tiles = tiles;
+        //grid.tiles = tiles;
         grid.PutSprites();
+
+        return true;
     }
 
     Vector2 NextPosition(char direction) {

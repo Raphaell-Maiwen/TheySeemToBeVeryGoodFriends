@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class GridGen : MonoBehaviour
 {
+    public string nextScene;
+
     [TextArea(10, 10)]
     public string levelString;
 
@@ -144,11 +147,68 @@ public class GridGen : MonoBehaviour
         Debug.LogError("Invalid Level >:( " + errorMessage);
     }
 
+    public void CheckHeteroMatching() {
+        for (int x = 0; x < rowsLength; x++) {
+            for (int y = 0; y < columnsLength; y++) {
+                if (tiles[x][y] == 'M') {
+                    if (x > 0 && tiles[x - 1][y] == 'W')
+                        HeteroMatch(x, y, x -1, y);
+                    else if (x + 1 < rowsLength && tiles[x + 1][y] == 'W')
+                        HeteroMatch(x, y, x + 1, y);
+                    else if (y> 0 && tiles[x][y - 1] == 'W')
+                        HeteroMatch(x, y, x, y - 1);
+                    else if (y + 1 < columnsLength && tiles[x][y + 1] == 'W')
+                        HeteroMatch(x, y, x, y + 1);
+                }
+            }
+        }
+    }
+
+    void HeteroMatch(int x1, int y1, int x2, int y2) {
+        tiles[x1][y1] = 'A';
+        tiles[x2][y2] = 'L';
+        PutSprites();
+    }
+
+    public void CheckWin() {
+        bool won = true;
+        for (int x = 0; x < rowsLength; x++) {
+            for (int y = 0; y < columnsLength; y++) {
+                if (tiles[x][y] == 'M' || tiles[x][y] == 'W') {
+                    //print(tiles[x][y]);
+                    won = false;
+                    break;
+                }
+            }
+            if (!won)
+                break;
+        }
+
+        if (won) {
+            Win();
+        }
+    }
+
+    void Win() {
+        print("Next level");
+        Destroy(this.gameObject.GetComponent<Player>());
+        StartCoroutine(LoadNextLevel());
+    }
+
+    public void Reset() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     void TestLevel() {
         for (int i = 0; i < tiles.Count; i++) {
             for (int j = 0; j < tiles[i].Count; j++) {
                 //print(tiles[i][j]);
             }
         }
+    }
+
+    IEnumerator LoadNextLevel() {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(nextScene);
     }
 }
