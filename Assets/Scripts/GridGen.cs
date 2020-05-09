@@ -53,7 +53,7 @@ public class GridGen : MonoBehaviour
         //Confirms that rows are all of the same length
         for (int i = 0; i < rows.Length; i++) {
             if (rows[i].Length != rowsLength) {
-                InvalidLevel("One row is not the right length: " + (i + 1));
+                InvalidLevel("The row" +i + "is not the right length: " + rows[i].Length);
                 return;
             }
         }
