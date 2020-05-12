@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
             Move(x + 1, y, 'r');
         else if (Input.GetKeyDown(KeyCode.R))
             grid.Reset();
+        else if (Input.GetKeyDown(KeyCode.S))
+            StartCoroutine(grid.LoadNextLevel());
     }
 
     void Move(int nextTileX, int nextTileY, char direction) {
@@ -83,7 +85,7 @@ public class Player : MonoBehaviour
         else if (nextSymbol == 'M') {
             if (symbol == 'M') {
                 //TODO: change this to G
-                grid.tiles[newX][newY] = 'A';
+                grid.tiles[newX][newY] = 'G';
                 return true;
             }
             else if (symbol == 'P') {

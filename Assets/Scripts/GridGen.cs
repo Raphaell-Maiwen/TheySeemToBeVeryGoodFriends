@@ -32,6 +32,7 @@ public class GridGen : MonoBehaviour
     public TileBase background;
     public TileBase womanInLove;
     public TileBase manInLove;
+    public TileBase gay;
 
     void Awake(){
         BuildLevel();
@@ -132,6 +133,9 @@ public class GridGen : MonoBehaviour
                 else if (character == 'A') {
                     baseLevel.SetTile(localTilesPositions[i * rowsLength + j], manInLove);
                 }
+                else if (character == 'G') {
+                    baseLevel.SetTile(localTilesPositions[i * rowsLength + j], gay);
+                }
                 //
             }
         }
@@ -207,7 +211,7 @@ public class GridGen : MonoBehaviour
         }
     }
 
-    IEnumerator LoadNextLevel() {
+    public IEnumerator LoadNextLevel() {
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(nextScene);
     }

@@ -212,6 +212,12 @@ PrefabInstance:
 
         #########'
       objectReference: {fileID: 0}
+    - target: {fileID: 727230242379724913, guid: c4a38642589a50f44bdde121f4497f0f,
+        type: 3}
+      propertyPath: gay
+      value: 
+      objectReference: {fileID: 11400000, guid: 758d5ca76ef3c4543a92bec1e47d76f9,
+        type: 2}
     - target: {fileID: 727230242379724943, guid: c4a38642589a50f44bdde121f4497f0f,
         type: 3}
       propertyPath: m_LocalPosition.x

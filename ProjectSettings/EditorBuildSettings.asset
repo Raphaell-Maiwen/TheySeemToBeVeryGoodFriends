@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Gym.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/Title Screen.unity
+    guid: c5f25870d47fced4dafa2ab7502efb3a
+  - enabled: 1
     path: Assets/Scenes/Level1.unity
     guid: 2cd939d5e33d9d64ea3bf0ef573c2ce6
   - enabled: 1
@@ -65,10 +68,31 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level15.unity
     guid: d448b97d906946741b089aa5bce2c197
-  - enabled: 1
-    path: Assets/Scenes/Level14b.unity
-    guid: 0f80d4ac150217946949d25f15e49298
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Level12.unity
     guid: ae14050ca584b9649a30d3d5e6e69aa4
+  - enabled: 1
+    path: Assets/Scenes/Meme4.unity
+    guid: 5aa33b057511dd84e875eab0644c12a4
+  - enabled: 1
+    path: Assets/Scenes/Meme5.unity
+    guid: d0a97a1d41f4edd4eb2ebfa9e3513ad1
+  - enabled: 1
+    path: Assets/Scenes/Meme6.unity
+    guid: cb7009f4015115447ba561076c20bcd8
+  - enabled: 1
+    path: Assets/Scenes/Meme7.unity
+    guid: 1d276aa1c9f948d4a9ba40a01fb9b1e9
+  - enabled: 1
+    path: Assets/Scenes/Meme8.unity
+    guid: b8f8719517291324aaaed7725b47c894
+  - enabled: 1
+    path: Assets/Scenes/Meme9.unity
+    guid: eb0b5dd348bc76348b0f945395953599
+  - enabled: 1
+    path: Assets/Scenes/Instructions Screen.unity
+    guid: ee2facf828db3744ab139a878b7bc4e4
   m_configObjects: {}

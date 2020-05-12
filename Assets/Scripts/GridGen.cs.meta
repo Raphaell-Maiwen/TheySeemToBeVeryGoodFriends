@@ -3,7 +3,16 @@ guid: 6c627e75222ab8a438b7ba72d0c99628
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - baseLevel: {instanceID: 0}
+  - player: {instanceID: 0}
+  - wall: {instanceID: 0}
+  - woman: {instanceID: 0}
+  - man: {instanceID: 0}
+  - background: {instanceID: 0}
+  - womanInLove: {instanceID: 0}
+  - manInLove: {instanceID: 0}
+  - gay: {fileID: 11400000, guid: 758d5ca76ef3c4543a92bec1e47d76f9, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
