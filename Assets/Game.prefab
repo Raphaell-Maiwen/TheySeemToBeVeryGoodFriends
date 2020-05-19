@@ -327,10 +327,11 @@ MonoBehaviour:
   playerX: -1
   playerY: -1
   baseLevel: {fileID: 727230241141453480}
-  player: {fileID: 11400000, guid: 24450ba96786ef044ae0face3848da81, type: 2}
+  player: {fileID: 11400000, guid: 2685e3ae13b280c44a6683a2801a1039, type: 2}
   wall: {fileID: 11400000, guid: 139774f07ae622342834808ddf8474a1, type: 2}
   woman: {fileID: 11400000, guid: fb53a918d766a7847946d9e34851ccc9, type: 2}
   man: {fileID: 11400000, guid: 83fa5144eef2c394396a8e5165cb403c, type: 2}
   background: {fileID: 11400000, guid: 9d2a352b82965054698184c78fdf8d51, type: 2}
   womanInLove: {fileID: 11400000, guid: a0b9e6ac1afd1054ba48d5af0b4eb713, type: 2}
   manInLove: {fileID: 11400000, guid: f36cd7e69a2513048ac9f8519b99c7ff, type: 2}
+  gay: {fileID: 11400000, guid: 758d5ca76ef3c4543a92bec1e47d76f9, type: 2}
