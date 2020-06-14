@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 public class GridGen : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GridGen : MonoBehaviour
 
     [HideInInspector]
     public List<List<char>> tiles;
+    private Stack<List<List<char>>> states;
 
     [HideInInspector]
     public int rowsLength = 0;
@@ -33,6 +35,9 @@ public class GridGen : MonoBehaviour
     public TileBase womanInLove;
     public TileBase manInLove;
     public TileBase gay;
+    public TileBase polyamory;
+
+    public bool removeFirstState = false;
 
     void Awake(){
         BuildLevel();
@@ -41,6 +46,7 @@ public class GridGen : MonoBehaviour
 
     void BuildLevel() {
         tiles = new List<List<char>>();
+        states = new Stack<List<List<char>>>();
 
         string[] rows =  levelString.Split('\n');
 
@@ -76,6 +82,7 @@ public class GridGen : MonoBehaviour
             InvalidLevel("No player");
         else {
             PutSprites();
+            AddState();
             this.gameObject.AddComponent<Player>();
         }
     }
@@ -116,6 +123,7 @@ public class GridGen : MonoBehaviour
                 //print(character);
                 if (character == 'P') {
                     baseLevel.SetTile(localTilesPositions[i * rowsLength + j], player);
+                    SetPlayerPos(j, i);
                 }
                 else if (character == '#')
                     baseLevel.SetTile(localTilesPositions[i * rowsLength + j], wall);
@@ -137,6 +145,9 @@ public class GridGen : MonoBehaviour
                     baseLevel.SetTile(localTilesPositions[i * rowsLength + j], gay);
                 }
                 //
+                else if (character == '8') {
+                    baseLevel.SetTile(localTilesPositions[i * rowsLength + j], polyamory);
+                }
             }
         }
     }
@@ -172,6 +183,32 @@ public class GridGen : MonoBehaviour
         tiles[x1][y1] = 'A';
         tiles[x2][y2] = 'L';
         PutSprites();
+    }
+
+    public void AddState() {
+        List<List<char>> tempList = new List<List<char>>();
+        for (int x = 0; x < rowsLength; x++) {
+            tempList.Add(new List<char>());
+            for (int y = 0; y < columnsLength; y++) {
+                tempList[x].Add(tiles[x][y]);
+            }
+        }
+
+        print("AddState " + states.Count);
+        states.Push(tempList);
+    }
+
+    public void RevertState() {
+        //Might need an additional pop if same
+        print("Revert " +  states.Count);
+        if (states.Count > 0) {
+            if (removeFirstState)
+                states.Pop();
+            tiles = new List<List<char>>(states.Pop());
+            PutSprites();
+            if (states.Count == 0)
+                AddState();
+        }
     }
 
     public void CheckWin() {

@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
             Move(x - 1, y, 'l');
         else if (Input.GetKeyDown(KeyCode.RightArrow))
             Move(x + 1, y, 'r');
+        else if (Input.GetKeyDown(KeyCode.Z))
+            RevertState();
         else if (Input.GetKeyDown(KeyCode.R))
             grid.Reset();
         else if (Input.GetKeyDown(KeyCode.S))
@@ -43,6 +45,8 @@ public class Player : MonoBehaviour
             if (MoveSprite(nextTileX, nextTileY, 'P', direction)) {
                 grid.CheckHeteroMatching();
                 grid.CheckWin();
+                grid.AddState();
+                grid.removeFirstState = true;
             }
             else {
                 print("This is a wall");
@@ -110,6 +114,13 @@ public class Player : MonoBehaviour
         grid.PutSprites();
 
         return true;
+    }
+
+    void RevertState() {
+        grid.RevertState();
+        x = grid.playerX;
+        y = grid.playerY;
+        grid.removeFirstState = false;
     }
 
     Vector2 NextPosition(char direction) {
